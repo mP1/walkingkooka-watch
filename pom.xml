@@ -325,7 +325,7 @@
                 </dependencies>
             </plugin>
 
-            <!--
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -339,17 +339,17 @@
                         </goals>
                         <configuration>
                             <groupId>walkingkooka</groupId>
-                            <artifactId>walkingkooka-gwt</artifactId>
+                            <artifactId>walkingkooka-watch-gwt</artifactId>
                             <version>1.0-SNAPSHOT</version>
                             <packaging>jar</packaging>
-                            <file>target/walkingkooka-gwt-1.0-SNAPSHOT.jar</file>
+                            <file>target/walkingkooka-watch-gwt-1.0-SNAPSHOT.jar</file>
                             <url>https://maven-repo-254709.appspot.com</url>
                             <repositoryId>github-mp1-appengine-repo</repositoryId>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            -->
+
         </plugins>
     </build>
 
