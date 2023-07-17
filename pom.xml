@@ -191,7 +191,6 @@
                 </executions>
             </plugin>
 
-            <!--
             <plugin>
                 <groupId>walkingkooka</groupId>
                 <artifactId>walkingkooka-gwt-archive-maker-maven-plugin</artifactId>
@@ -257,7 +256,6 @@
                     <streamLogs>false</streamLogs>
                 </configuration>
             </plugin>
-            -->
 
             <!-- dont want to include *.gwt.xml in *.jar -->
             <plugin>
