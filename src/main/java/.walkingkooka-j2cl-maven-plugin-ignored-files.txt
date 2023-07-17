@@ -1,0 +1,6 @@
+#
+# test
+# Filter everything but Fake
+#
+**/*Testing.*
+**/*Testing2.*
