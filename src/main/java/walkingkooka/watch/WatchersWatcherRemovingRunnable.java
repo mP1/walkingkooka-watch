@@ -18,7 +18,6 @@
 package walkingkooka.watch;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /**
@@ -42,17 +41,20 @@ final class WatchersWatcherRemovingRunnable<T> implements Runnable {
 
     @Override
     public void run() {
-        if (!this.removed.getAndSet(true)) {
-            this.watchers.remove(watcher);
-        }
+        this.watchers.remove(this.watcher);
     }
 
     private final Consumer<T> watcher;
     private final List<Consumer<T>> watchers;
-    private final AtomicBoolean removed = new AtomicBoolean();
 
     @Override
     public String toString() {
-        return this.watcher + (this.removed.get() ? " Removed" : " Active");
+        final Consumer<T> watcher = this.watcher;
+        return watcher.toString()
+                .concat(
+                        this.watchers.contains(watcher) ?
+                                " Active" :
+                                " Removed"
+                );
     }
 }
