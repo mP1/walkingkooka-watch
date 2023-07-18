@@ -35,12 +35,15 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     private final static String SOURCE1A = "Source1A";
     private final static String SOURCE2B = "Source2B";
     private final static String SOURCE3C = "Source3C";
-
+    
+    // add..............................................................................................................
+    
     @Test
     public void testAddNullWatcherFails() {
-        assertThrows(NullPointerException.class, () -> {
-            Watchers.create().add(null);
-        });
+        assertThrows(
+                NullPointerException.class,
+                () -> Watchers.create().add(null)
+        );
     }
 
     @Test
@@ -171,11 +174,83 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
         this.checkEquals(Lists.of(SOURCE1A), fired1);
         this.checkEquals(Lists.of(SOURCE1A, SOURCE2B), fired2);
     }
+    
+    // addOnce..........................................................................................................
+    
+    @Test
+    public void testAddOnceNullWatcherFails() {
+        assertThrows(NullPointerException.class,
+                () -> Watchers.create().addOnce(null)
+        );
+    }
+
+    @Test
+    public void testAddOnceAndFire() {
+        final Watchers<String> watchers = Watchers.create();
+
+        final List<String> fired = Lists.array();
+        watchers.addOnce(this.watcher(fired));
+
+        watchers.accept(SOURCE1A);
+
+        this.checkEquals(Lists.of(SOURCE1A), fired);
+    }
+
+    @Test
+    public void testAddOnceAndFire2() {
+        final Watchers<String> watchers = Watchers.create();
+
+        final List<String> fired1 = Lists.array();
+        final List<String> fired2 = Lists.array();
+        watchers.addOnce(this.watcher(fired1));
+        watchers.addOnce(this.watcher(fired2));
+
+        watchers.accept(SOURCE1A);
+
+        this.checkEquals(Lists.of(SOURCE1A), fired1);
+        this.checkEquals(Lists.of(SOURCE1A), fired2);
+    }
+
+    @Test
+    public void testAddOnceAndFire3() {
+        final Watchers<String> watchers = Watchers.create();
+
+        final List<String> fired1 = Lists.array();
+        final List<String> fired2 = Lists.array();
+        watchers.addOnce(this.watcher(fired1));
+        watchers.addOnce(this.watcher(fired2));
+
+        watchers.accept(SOURCE1A);
+        watchers.accept("Ignored!");
+
+        this.checkEquals(Lists.of(SOURCE1A), fired1);
+        this.checkEquals(Lists.of(SOURCE1A), fired2);
+    }
+
+    @Test
+    public void testAddAndAddOnceAndFire() {
+        final Watchers<String> watchers = Watchers.create();
+
+        final List<String> fired1 = Lists.array();
+        final List<String> fired2 = Lists.array();
+
+        watchers.addOnce(this.watcher(fired1));
+        watchers.add(this.watcher(fired2));
+
+        watchers.accept(SOURCE1A);
+        watchers.accept(SOURCE2B);
+
+        this.checkEquals(Lists.of(SOURCE1A), fired1);
+        this.checkEquals(Lists.of(SOURCE1A, SOURCE2B), fired2);
+    }
+
 
     private Consumer<String> watcher(final List<String> fired) {
         return (s) -> fired.add(s);
     }
 
+    // toString.........................................................................................................
+    
     @Test
     public void testToString() {
         final Watchers<String> watchers = Watchers.create();

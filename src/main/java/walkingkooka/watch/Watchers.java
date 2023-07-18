@@ -19,6 +19,7 @@ package walkingkooka.watch;
 
 import walkingkooka.collect.list.Lists;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -52,8 +53,28 @@ public final class Watchers<T> implements Consumer<T> {
     public Runnable add(final Consumer<T> watcher) {
         Objects.requireNonNull(watcher, "watcher");
 
-        this.watchers.add(watcher);
-        return WatchersWatcherRemovingRunnable.with(watcher, this.watchers);
+        return this.add0(watcher);
+    }
+
+    /**
+     * Adds a new watcher which will be removed after a single fire.
+     */
+    public Runnable addOnce(final Consumer<T> watcher) {
+        Objects.requireNonNull(watcher, "watcher");
+
+        return this.add0(
+                WatchersOnceConsumer.with(watcher)
+        );
+    }
+
+    private Runnable add0(final Consumer<T> watcher) {
+        final List<Consumer<T>> watchers = this.watchers;
+
+        watchers.add(watcher);
+        return WatchersWatcherRemovingRunnable.with(
+                watcher,
+                watchers
+        );
     }
 
     /**
@@ -62,7 +83,17 @@ public final class Watchers<T> implements Consumer<T> {
     @Override
     public void accept(final T source) {
         Objects.requireNonNull(source, "source");
-        this.watchers.forEach(w -> w.accept(source));
+
+        final List<Consumer<T>> watchers = this.watchers;
+        int i = 0;
+        for (final Consumer<T> watcher : watchers) {
+            watcher.accept(source);
+            if (watcher instanceof WatchersOnceConsumer) {
+                watchers.remove(i);
+                i--;
+            };
+            i++;
+        }
     }
 
     private final List<Consumer<T>> watchers = Lists.copyOnWrite();
