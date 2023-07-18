@@ -39,7 +39,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     @Test
     public void testAddNullWatcherFails() {
         assertThrows(NullPointerException.class, () -> {
-            Watchers.create().addWatcher(null);
+            Watchers.create().add(null);
         });
     }
 
@@ -48,7 +48,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
         final Watchers<String> watchers = Watchers.create();
 
         final List<String> fired = Lists.array();
-        watchers.addWatcher(this.watcher(fired));
+        watchers.add(this.watcher(fired));
 
         watchers.accept(SOURCE1A);
 
@@ -61,8 +61,8 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
-        watchers.addWatcher(this.watcher(fired1));
-        watchers.addWatcher(this.watcher(fired2));
+        watchers.add(this.watcher(fired1));
+        watchers.add(this.watcher(fired2));
 
         watchers.accept(SOURCE1A);
 
@@ -76,8 +76,8 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
-        watchers.addWatcher(this.watcher(fired1));
-        watchers.addWatcher(this.watcher(fired2));
+        watchers.add(this.watcher(fired1));
+        watchers.add(this.watcher(fired2));
 
         watchers.accept(SOURCE1A);
         watchers.accept(SOURCE2B);
@@ -87,16 +87,16 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     }
 
     @Test
-    public void testAddWatcherMultipleTimes() {
+    public void testAddMultipleTimes() {
         final Watchers<String> watchers = Watchers.create();
 
         final List<String> fired = Lists.array();
         final Consumer<String> watcher = this.watcher(fired);
 
-        watchers.addWatcher(watcher);
+        watchers.add(watcher);
         watchers.accept(SOURCE1A);
 
-        watchers.addWatcher(watcher);
+        watchers.add(watcher);
         watchers.accept(SOURCE2B);
 
         this.checkEquals(Lists.of(SOURCE1A, SOURCE2B, SOURCE2B), fired);
@@ -107,7 +107,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
         final Watchers<String> watchers = Watchers.create();
 
         final List<String> fired1 = Lists.array();
-        watchers.addWatcher(this.watcher(fired1)).run();
+        watchers.add(this.watcher(fired1)).run();
 
         watchers.accept(SOURCE1A);
 
@@ -115,16 +115,16 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     }
 
     @Test
-    public void testAddWatcherMultipleTimesRemovedOnce() {
+    public void testAddMultipleTimesRemovedOnce() {
         final Watchers<String> watchers = Watchers.create();
 
         final List<String> fired = Lists.array();
         final Consumer<String> watcher = this.watcher(fired);
-        final Runnable remover = watchers.addWatcher(watcher);
+        final Runnable remover = watchers.add(watcher);
 
         watchers.accept(SOURCE1A);
 
-        watchers.addWatcher(watcher);
+        watchers.add(watcher);
         watchers.accept(SOURCE2B);
 
         remover.run();
@@ -139,7 +139,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
         final Watchers<String> watchers = Watchers.create();
 
         final List<String> fired1 = Lists.array();
-        watchers.addWatcher(this.watcher(fired1)).run();
+        watchers.add(this.watcher(fired1)).run();
 
         watchers.accept(SOURCE1A);
         watchers.accept(SOURCE1A);
@@ -154,8 +154,8 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
-        final Runnable remover1 = watchers.addWatcher(this.watcher(fired1));
-        final Runnable remover2 = watchers.addWatcher(this.watcher(fired2));
+        final Runnable remover1 = watchers.add(this.watcher(fired1));
+        final Runnable remover2 = watchers.add(this.watcher(fired2));
 
         watchers.accept(SOURCE1A);
 
@@ -179,8 +179,8 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     @Test
     public void testToString() {
         final Watchers<String> watchers = Watchers.create();
-        watchers.addWatcher(this.watcher("watcher1"));
-        watchers.addWatcher(this.watcher("watcher2"));
+        watchers.add(this.watcher("watcher1"));
+        watchers.add(this.watcher("watcher2"));
 
         this.toStringAndCheck(watchers, "[watcher1, watcher2]");
     }
@@ -188,8 +188,8 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     @Test
     public void testToString2() {
         final Watchers<String> watchers = Watchers.create();
-        watchers.addWatcher(this.watcher("watcher1"));
-        watchers.addWatcher(this.watcher("watcher2")).run();
+        watchers.add(this.watcher("watcher1"));
+        watchers.add(this.watcher("watcher2")).run();
 
         this.toStringAndCheck(watchers, "[watcher1]");
     }
