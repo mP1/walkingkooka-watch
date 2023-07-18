@@ -244,6 +244,26 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
         this.checkEquals(Lists.of(SOURCE1A, SOURCE2B), fired2);
     }
 
+    // removeOnce......................................................................................................
+
+    @Test
+    public void testAddAddOnceRemoveOnceAndFire() {
+        final Watchers<String> watchers = Watchers.create();
+
+        final List<String> fired1 = Lists.array();
+        final List<String> fired2 = Lists.array();
+
+        watchers.addOnce(this.watcher(fired1));
+        watchers.add(this.watcher(fired2));
+
+        watchers.removeOnce();
+
+        watchers.accept(SOURCE1A);
+        watchers.accept(SOURCE2B);
+
+        this.checkEquals(Lists.empty(), fired1);
+        this.checkEquals(Lists.of(SOURCE1A, SOURCE2B), fired2);
+    }
 
     private Consumer<String> watcher(final List<String> fired) {
         return (s) -> fired.add(s);
