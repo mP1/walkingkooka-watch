@@ -49,7 +49,7 @@ public final class Watchers<T> implements Consumer<T> {
     /**
      * Adds a new watcher which may be removed by calling the returned {@link Runnable}.
      */
-    public Runnable addWatcher(final Consumer<T> watcher) {
+    public Runnable add(final Consumer<T> watcher) {
         Objects.requireNonNull(watcher, "watcher");
 
         this.watchers.add(watcher);
