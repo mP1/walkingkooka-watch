@@ -78,6 +78,22 @@ public final class Watchers<T> implements Consumer<T> {
     }
 
     /**
+     * Remove any {@link Consumer} watchers that were added using {@link #addOnce(Consumer)}.
+     */
+    public void removeOnce() {
+        final List<Consumer<T>> watchers = this.watchers;
+        int i = 0;
+
+        for (final Consumer<T> watcher : watchers) {
+            if (watcher instanceof WatchersOnceConsumer) {
+                watchers.remove(i);
+                i--;
+            };
+            i++;
+        }
+    }
+
+    /**
      * Fire an event to all watchers.
      */
     @Override
