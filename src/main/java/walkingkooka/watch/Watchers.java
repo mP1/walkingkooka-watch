@@ -87,7 +87,7 @@ public final class Watchers<T> implements Consumer<T> {
             if (watcher instanceof WatchersOnceConsumer) {
                 watchers.remove(i);
                 i--;
-            };
+            }
             i++;
         }
     }
