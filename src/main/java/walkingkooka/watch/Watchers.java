@@ -100,14 +100,24 @@ public final class Watchers<T> implements Consumer<T> {
         Objects.requireNonNull(source, "source");
 
         final List<Consumer<T>> watchers = this.watchers;
+
+        final List<Consumer<T>> fire = Lists.array();
+
         int i = 0;
+
+        // make a copy of all watches removing any one time watchers along the way.
         for (final Consumer<T> watcher : watchers) {
-            watcher.accept(source);
+            fire.add(watcher);
             if (watcher instanceof WatchersOnceConsumer) {
                 watchers.remove(i);
                 i--;
             }
             i++;
+        }
+
+        // fire
+        for (final Consumer<T> watcher : fire) {
+            watcher.accept(source);
         }
     }
 
