@@ -19,7 +19,6 @@ package walkingkooka.watch;
 
 import walkingkooka.collect.list.Lists;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -107,7 +106,7 @@ public final class Watchers<T> implements Consumer<T> {
             if (watcher instanceof WatchersOnceConsumer) {
                 watchers.remove(i);
                 i--;
-            };
+            }
             i++;
         }
     }
