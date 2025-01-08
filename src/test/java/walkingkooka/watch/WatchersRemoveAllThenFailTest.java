@@ -61,10 +61,10 @@ public final class WatchersRemoveAllThenFailTest implements ClassTesting2<Watche
         assertSame(thrown, assertThrows(RuntimeException.class, () -> {
 
             WatchersRemoveAllThenFail.executeOrFail(
-                    () -> {
-                        throw thrown;
-                    },
-                    () -> this.counter++);
+                () -> {
+                    throw thrown;
+                },
+                () -> this.counter++);
         }));
 
         this.check(1);
@@ -78,13 +78,13 @@ public final class WatchersRemoveAllThenFailTest implements ClassTesting2<Watche
         assertSame(first, assertThrows(RuntimeException.class, () -> {
 
             WatchersRemoveAllThenFail.executeOrFail(
-                    () -> {
-                        throw first;
-                    },
-                    () -> {
-                        throw second;
-                    },
-                    () -> this.counter++);
+                () -> {
+                    throw first;
+                },
+                () -> {
+                    throw second;
+                },
+                () -> this.counter++);
         }));
 
         assertArrayEquals(new Throwable[]{second}, first.getSuppressed());
@@ -100,17 +100,17 @@ public final class WatchersRemoveAllThenFailTest implements ClassTesting2<Watche
         assertSame(first, assertThrows(RuntimeException.class, () -> {
 
             WatchersRemoveAllThenFail.executeOrFail(
-                    () -> {
-                        throw first;
-                    },
-                    () -> {
-                        throw second;
-                    },
-                    null,
-                    () -> {
-                        throw third;
-                    },
-                    () -> this.counter++);
+                () -> {
+                    throw first;
+                },
+                () -> {
+                    throw second;
+                },
+                null,
+                () -> {
+                    throw third;
+                },
+                () -> this.counter++);
         }));
 
         assertArrayEquals(new Throwable[]{second, third}, first.getSuppressed());
