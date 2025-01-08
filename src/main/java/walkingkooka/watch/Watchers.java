@@ -62,7 +62,7 @@ public final class Watchers<T> implements Consumer<T> {
         Objects.requireNonNull(watcher, "watcher");
 
         return this.add0(
-                WatchersOnceConsumer.with(watcher)
+            WatchersOnceConsumer.with(watcher)
         );
     }
 
@@ -71,8 +71,8 @@ public final class Watchers<T> implements Consumer<T> {
 
         watchers.add(watcher);
         return WatchersWatcherRemovingRunnable.with(
-                watcher,
-                watchers
+            watcher,
+            watchers
         );
     }
 

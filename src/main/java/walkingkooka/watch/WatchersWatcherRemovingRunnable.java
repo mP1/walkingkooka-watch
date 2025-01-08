@@ -51,10 +51,10 @@ final class WatchersWatcherRemovingRunnable<T> implements Runnable {
     public String toString() {
         final Consumer<T> watcher = this.watcher;
         return watcher.toString()
-                .concat(
-                        this.watchers.contains(watcher) ?
-                                " Active" :
-                                " Removed"
-                );
+            .concat(
+                this.watchers.contains(watcher) ?
+                    " Active" :
+                    " Removed"
+            );
     }
 }

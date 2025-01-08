@@ -40,7 +40,7 @@ final class WatchersRemoveAllThenFail {
         this.fail = null;
 
         Arrays.stream(removers)
-                .forEach(this::tryRemove);
+            .forEach(this::tryRemove);
     }
 
     private void tryRemove(final Runnable runnable) {

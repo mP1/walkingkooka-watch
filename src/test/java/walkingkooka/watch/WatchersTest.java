@@ -30,19 +30,19 @@ import java.util.function.Consumer;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class WatchersTest implements ClassTesting2<Watchers<?>>,
-        ToStringTesting<Watchers<?>> {
+    ToStringTesting<Watchers<?>> {
 
     private final static String SOURCE1A = "Source1A";
     private final static String SOURCE2B = "Source2B";
     private final static String SOURCE3C = "Source3C";
-    
+
     // add..............................................................................................................
-    
+
     @Test
     public void testAddNullWatcherFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> Watchers.create().add(null)
+            NullPointerException.class,
+            () -> Watchers.create().add(null)
         );
     }
 
@@ -174,13 +174,13 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
         this.checkEquals(Lists.of(SOURCE1A), fired1);
         this.checkEquals(Lists.of(SOURCE1A, SOURCE2B), fired2);
     }
-    
+
     // addOnce..........................................................................................................
-    
+
     @Test
     public void testAddOnceNullWatcherFails() {
         assertThrows(NullPointerException.class,
-                () -> Watchers.create().addOnce(null)
+            () -> Watchers.create().addOnce(null)
         );
     }
 
@@ -270,7 +270,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     }
 
     // toString.........................................................................................................
-    
+
     @Test
     public void testToString() {
         final Watchers<String> watchers = Watchers.create();
