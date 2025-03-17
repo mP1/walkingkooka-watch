@@ -36,6 +36,13 @@ public final class Watchers<T> implements Consumer<T> {
     }
 
     /**
+     * {@see RunnableCollection}
+     */
+    public static Runnable runnableCollection(final List<Runnable> runnables) {
+        return RunnableCollection.with(runnables);
+    }
+
+    /**
      * Creates an empty {@link Watchers}
      */
     public static <T> Watchers<T> create() {
