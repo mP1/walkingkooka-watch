@@ -54,7 +54,23 @@ final class RunnableCollection implements Runnable {
 
     @Override
     public void run() {
-        this.runnables.forEach(Runnable::run);
+        RuntimeException thrown = null;
+
+        for(final Runnable runnable : this.runnables) {
+            try {
+                runnable.run();
+            } catch (final RuntimeException cause) {
+                if (null == thrown) {
+                    thrown = cause;
+                } else {
+                    thrown.addSuppressed(cause);
+                }
+            }
+        }
+
+        if(null != thrown) {
+            throw thrown;
+        }
     }
 
     private final List<Runnable> runnables;

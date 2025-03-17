@@ -17,6 +17,7 @@
 
 package walkingkooka.watch;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
@@ -25,6 +26,7 @@ import walkingkooka.reflect.JavaVisibility;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -51,7 +53,8 @@ public final class RunnableCollectionTest implements ToStringTesting<RunnableCol
 
     @Test
     public void testWithOneNeverWraps() {
-        final Runnable runnable = () -> {};
+        final Runnable runnable = () -> {
+        };
 
         assertSame(
             runnable,
@@ -63,8 +66,10 @@ public final class RunnableCollectionTest implements ToStringTesting<RunnableCol
 
     @Test
     public void testWith() {
-        final Runnable runnable1 = () -> {};
-        final Runnable runnable2 = () -> {};
+        final Runnable runnable1 = () -> {
+        };
+        final Runnable runnable2 = () -> {
+        };
 
         final RunnableCollection runnableCollection = (RunnableCollection) RunnableCollection.with(
             Lists.of(
@@ -76,11 +81,25 @@ public final class RunnableCollectionTest implements ToStringTesting<RunnableCol
 
     // run..............................................................................................................
 
+    @BeforeEach
+    public void beforeEachTest() {
+        this.counter = 0;
+    }
+
+    private void counterCheck(final int expected) {
+        this.checkEquals(
+            expected,
+            counter,
+            "watchers removed"
+        );
+    }
+
+    private int counter;
+
     @Test
     public void testRun() {
-        final AtomicInteger counter = new AtomicInteger();
-        final Runnable runnable1 = () -> counter.incrementAndGet();
-        final Runnable runnable2 = () -> counter.incrementAndGet();
+        final Runnable runnable1 = () -> this.counter++;
+        final Runnable runnable2 = () -> this.counter++;
 
         final Runnable runnableCollection = RunnableCollection.with(
             Lists.of(
@@ -91,10 +110,103 @@ public final class RunnableCollectionTest implements ToStringTesting<RunnableCol
 
         runnableCollection.run();
 
-        this.checkEquals(
-            2,
-            counter.get()
+        this.counterCheck(2);
+    }
+
+    @Test
+    public void testRunFirstFailureContinuesWithOutstanding() {
+        final RuntimeException thrown = new RuntimeException("first");
+
+        assertSame(
+            thrown,
+            assertThrows(
+                RuntimeException.class,
+                () -> RunnableCollection.with(
+                    Lists.of(
+                        () -> {
+                            throw thrown;
+                        },
+                        () -> this.counter++
+                    )
+                ).run()
+            )
         );
+
+        this.check(1);
+    }
+
+    @Test
+    public void testRunMultipleFailures() {
+        final RuntimeException first = new RuntimeException("first");
+        final RuntimeException second = new RuntimeException("second");
+
+        assertSame(
+            first,
+            assertThrows(
+                RuntimeException.class,
+                () -> RunnableCollection.with(
+                    Lists.of(
+                        () -> {
+                            throw first;
+                        },
+                        () -> {
+                            throw second;
+                        },
+                        () -> {
+                            this.counter++;
+                        }
+                    )
+                ).run()
+            )
+        );
+
+        assertArrayEquals(
+            new Throwable[]
+                {second},
+            first.getSuppressed()
+        );
+        this.check(1);
+    }
+
+    @Test
+    public void testRunMultipleFailures2() {
+        final RuntimeException first = new RuntimeException("first");
+        final RuntimeException second = new RuntimeException("second");
+        final RuntimeException third = new RuntimeException("third");
+
+        assertSame(
+            first,
+            assertThrows(
+                RuntimeException.class,
+                () -> RunnableCollection.with(
+                    Lists.of(
+                        () -> {
+                            throw first;
+                        },
+                        () -> {
+                            throw second;
+                        },
+                        () -> {
+                            throw third;
+                        },
+                        () -> this.counter++
+                    )
+                ).run()
+            )
+        );
+
+        assertArrayEquals(
+            new Throwable[]{
+                second,
+                third
+            },
+            first.getSuppressed()
+        );
+        this.check(1);
+    }
+
+    private void check(final int expected) {
+        this.checkEquals(expected, counter, "watchers removed");
     }
 
     // toString.........................................................................................................
