@@ -29,13 +29,6 @@ import java.util.function.Consumer;
 public final class Watchers<T> implements Consumer<T> {
 
     /**
-     * Removes all watchers, skipping nulls, and adding additional {@link RuntimeException} to the first and throwing that at the end.
-     */
-    public static void removeAllThenFail(final Runnable... removers) {
-        WatchersRemoveAllThenFail.executeOrFail(removers);
-    }
-
-    /**
      * {@see RunnableCollection}
      */
     public static Runnable runnableCollection(final List<Runnable> runnables) {
