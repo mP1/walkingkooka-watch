@@ -21,8 +21,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import walkingkooka.watch.Watchers;
 
-@J2clTestInput(JunitTest.class)
-public final class JunitTest {
+@J2clTestInput(J2clTest.class)
+public final class J2clTest {
 
     @Test
     public void testAssertEquals() {
