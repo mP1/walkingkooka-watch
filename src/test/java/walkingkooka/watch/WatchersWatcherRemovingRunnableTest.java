@@ -30,7 +30,7 @@ public final class WatchersWatcherRemovingRunnableTest implements ClassTesting2<
 
     @Test
     public void testToStringRemoved() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
         final Runnable remover = watchers.add(this.watcher());
         remover.run();
 
@@ -39,7 +39,7 @@ public final class WatchersWatcherRemovingRunnableTest implements ClassTesting2<
 
     @Test
     public void testToStringActive() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
         this.toStringAndCheck(watchers.add(this.watcher()), "Watcher123 Active");
     }
 

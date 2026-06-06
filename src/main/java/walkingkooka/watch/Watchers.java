@@ -38,7 +38,7 @@ public final class Watchers<T> implements Consumer<T> {
     /**
      * Creates an empty {@link Watchers}
      */
-    public static <T> Watchers<T> create() {
+    public static <T> Watchers<T> empty() {
         return new Watchers<>();
     }
 

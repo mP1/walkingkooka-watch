@@ -42,13 +42,13 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     public void testAddNullWatcherFails() {
         assertThrows(
             NullPointerException.class,
-            () -> Watchers.create().add(null)
+            () -> Watchers.empty().add(null)
         );
     }
 
     @Test
     public void testAddAndFire() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired = Lists.array();
         watchers.add(this.watcher(fired));
@@ -60,7 +60,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddAndFire2() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
@@ -75,7 +75,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddAndFire3() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
@@ -91,7 +91,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddMultipleTimes() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired = Lists.array();
         final Consumer<String> watcher = this.watcher(fired);
@@ -107,7 +107,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddAndRemove() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         watchers.add(this.watcher(fired1)).run();
@@ -119,7 +119,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddMultipleTimesRemovedOnce() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired = Lists.array();
         final Consumer<String> watcher = this.watcher(fired);
@@ -139,7 +139,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddAndRemoveMultipleTimes() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         watchers.add(this.watcher(fired1)).run();
@@ -153,7 +153,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddFireAndRemove() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
@@ -180,13 +180,13 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
     @Test
     public void testAddOnceNullWatcherFails() {
         assertThrows(NullPointerException.class,
-            () -> Watchers.create().addOnce(null)
+            () -> Watchers.empty().addOnce(null)
         );
     }
 
     @Test
     public void testAddOnceAndFire() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired = Lists.array();
         watchers.addOnce(this.watcher(fired));
@@ -198,7 +198,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddOnceAndFire2() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
@@ -213,7 +213,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddOnceAndFire3() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
@@ -229,7 +229,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddAndAddOnceAndFire() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
@@ -248,7 +248,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testAddAddOnceRemoveOnceAndFire() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
 
         final List<String> fired1 = Lists.array();
         final List<String> fired2 = Lists.array();
@@ -273,7 +273,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testToString() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
         watchers.add(this.watcher("watcher1"));
         watchers.add(this.watcher("watcher2"));
 
@@ -282,7 +282,7 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     @Test
     public void testToString2() {
-        final Watchers<String> watchers = Watchers.create();
+        final Watchers<String> watchers = Watchers.empty();
         watchers.add(this.watcher("watcher1"));
         watchers.add(this.watcher("watcher2")).run();
 
