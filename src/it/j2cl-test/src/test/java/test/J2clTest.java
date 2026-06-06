@@ -34,6 +34,6 @@ public final class J2clTest {
 
     @Test
     public void testWatchers() {
-        Watchers.create();
+        Watchers.empty();
     }
 }
