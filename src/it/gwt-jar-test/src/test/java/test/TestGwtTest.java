@@ -33,6 +33,6 @@ public class TestGwtTest extends GWTTestCase {
     }
 
     public void testWatchers() {
-        Watchers.create();
+        Watchers.empty();
     }
 }
