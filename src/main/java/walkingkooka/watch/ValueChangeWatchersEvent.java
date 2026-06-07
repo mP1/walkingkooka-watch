@@ -49,7 +49,7 @@ final class ValueChangeWatchersEvent<T> implements Consumer<ValueChangeWatcher<T
     // Consumer<ValueChangeWatcher>.....................................................................................
 
     @Override
-    public void accept(final ValueChangeWatcher watcher) {
+    public void accept(final ValueChangeWatcher<T> watcher) {
         watcher.onValueChange(
             Cast.to(this.oldValue),
             Cast.to(this.newValue)
