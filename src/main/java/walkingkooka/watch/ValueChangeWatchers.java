@@ -60,7 +60,7 @@ public final class ValueChangeWatchers<T> implements ValueChangeWatcher<T> {
     public void onValueChange(final Optional<T> oldValue,
                               final Optional<T> newValue) {
         if (false == oldValue.equals(newValue)) {
-            final ValueChangeWatchersEvent<?> event = ValueChangeWatchersEvent.with(
+            final ValueChangeWatchersEvent<T> event = ValueChangeWatchersEvent.with(
                 Cast.to(oldValue),
                 Cast.to(newValue)
             );
@@ -75,9 +75,9 @@ public final class ValueChangeWatchers<T> implements ValueChangeWatcher<T> {
         }
     }
 
-    private final Watchers<ValueChangeWatchersEvent<?>> watchers = Watchers.empty();
+    private final Watchers<ValueChangeWatchersEvent<T>> watchers = Watchers.empty();
 
-    private final Watchers<ValueChangeWatchersEvent<?>> onceWatchers = Watchers.empty();
+    private final Watchers<ValueChangeWatchersEvent<T>> onceWatchers = Watchers.empty();
 
     /**
      * Cant use Watchers#addOnce because that will remove the watcher during #onBegin
