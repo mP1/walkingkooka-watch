@@ -17,6 +17,8 @@
 
 package walkingkooka.watch;
 
+import walkingkooka.CanBeEmpty;
+import walkingkooka.CanBinary;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
@@ -26,7 +28,8 @@ import java.util.function.Consumer;
 /**
  * Abstraction that supports collecting and dispatching events. If a watcher is added multiple times it will be fired each time.
  */
-public final class Watchers<T> implements Consumer<T> {
+public final class Watchers<T> implements Consumer<T>,
+    CanBeEmpty {
 
     /**
      * {@see RunnableCollection}
@@ -122,6 +125,15 @@ public final class Watchers<T> implements Consumer<T> {
     }
 
     private final List<Consumer<T>> watchers = Lists.copyOnWrite();
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return this.watchers.isEmpty();
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {

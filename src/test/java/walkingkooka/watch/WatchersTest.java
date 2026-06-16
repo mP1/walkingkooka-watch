@@ -18,6 +18,7 @@
 package walkingkooka.watch;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
@@ -29,7 +30,8 @@ import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class WatchersTest implements ClassTesting2<Watchers<?>>,
+public final class WatchersTest implements CanBeEmptyTesting,
+    ClassTesting2<Watchers<?>>,
     ToStringTesting<Watchers<?>> {
 
     private final static String SOURCE1A = "Source1A";
@@ -267,6 +269,28 @@ public final class WatchersTest implements ClassTesting2<Watchers<?>>,
 
     private Consumer<String> watcher(final List<String> fired) {
         return (s) -> fired.add(s);
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testIsEmpty() {
+        this.isEmptyAndCheck(
+            Watchers.empty(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsEmptyAfterAdd() {
+        final Watchers<Void> watchers = Watchers.empty();
+        watchers.add((Void voidd) -> {
+        });
+
+        this.isEmptyAndCheck(
+            watchers,
+            false
+        );
     }
 
     // toString.........................................................................................................
