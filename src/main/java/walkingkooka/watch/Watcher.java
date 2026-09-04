@@ -21,4 +21,9 @@ package walkingkooka.watch;
  * Watches for events such as a value change.
  */
 public interface Watcher {
+
+    /**
+     * Useful constant for any {@link Watcher} that ignores any added {@link Watcher}.
+     */
+    Runnable NOTHING_REMOVER = () -> {};
 }
