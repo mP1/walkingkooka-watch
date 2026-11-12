@@ -26,7 +26,7 @@ import walkingkooka.reflect.JavaVisibility;
 import java.util.function.Consumer;
 
 public final class WatchersWatcherRemovingRunnableTest implements ClassTesting2<WatchersWatcherRemovingRunnable<?>>,
-    ToStringTesting<WatchersWatcherRemovingRunnable<?>> {
+    ToStringTesting {
 
     @Test
     public void testToStringRemoved() {
