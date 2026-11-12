@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class WatchersTest implements CanBeEmptyTesting,
     ClassTesting2<Watchers<?>>,
-    ToStringTesting<Watchers<?>> {
+    ToStringTesting {
 
     private final static String SOURCE1A = "Source1A";
     private final static String SOURCE2B = "Source2B";

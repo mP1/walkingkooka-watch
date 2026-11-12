@@ -29,7 +29,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ValueChangeWatchersEventTest implements ClassTesting<ValueChangeWatchersEvent<LineEnding>>,
-    ToStringTesting<ValueChangeWatchersEvent<LineEnding>> {
+    ToStringTesting {
 
     // with.............................................................................................................
 

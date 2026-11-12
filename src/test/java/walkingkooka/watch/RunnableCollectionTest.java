@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RunnableCollectionTest implements ToStringTesting<RunnableCollection>,
+public final class RunnableCollectionTest implements ToStringTesting,
     ClassTesting2<RunnableCollection> {
 
     @Test
